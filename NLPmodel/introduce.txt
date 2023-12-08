@@ -1,0 +1,31 @@
+--목적--
+자연어처리를 통하여 어플에 있는 리뷰들에 대해서 토큰화를 진행하고 단어들에게 긍정,부정을 설정하는 감성분석을 실행할 것이며
+이를 통해 4,5 별점에 있는 리뷰들 속 부정단어 / 1,2 별점에 있는 리뷰들에게 긍정단어가 있을 시 가짜리뷰로 판단 삭제 후 실제 어플의 리뷰 별점은 무엇인지 알아보려고 함
+-> 이를 통하여 소비자가 사용하려고 하는 어플에 대해서 정확한 별점 제공을 통해 
+소비자들이 어플에게 주어진 별점이 과장 또는 축소되었는 지 확인하고 어플을 선택하는 데 있어서 도움을 주고자 함.
+
+--데이터 선정--
+playstore속의 sns어플들의 리뷰들을 크롤링하려고 함 -> 리뷰많은 것 우선
+
+--모델선정--
+CNN, RNN이
+융합된 모델과 Transformer 기반의 한국어 KoBERT 모델에 대해 감성분석 task에서 다양한 성능비교를 진행했다.
+성능분석 결과 어절단위 한국어 KoBERT모델에서 90.50%상승
+https://scienceon.kisti.re.kr/srch/selectPORSrchArticle.do?cn=NPAP13451746
+-> kobert model 이용 생각.
+
+#두 번째 실험에서는 형태소 단위의 토큰을 다섯 가지로 분류하여 불용어 처리 후의 감성 분석 실험을 했다.
+ 두 번째 실험 결과 불용어 처리를 한 후 성능이 불용어 처리를 하지 않았을 때보다 비슷하거나 낮았다.
+-> 불용어처리를 하지 않는 방향으로 선택
+https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE09301944
+
+#kogpt -> gpt3기반
+https://developers.kakao.com/product/kogpt
+
+https://github.com/kakaobrain/kogpt  ->kogpt
+https://github.com/kiyoungkim1/LMkor ->lmkor
+
+￼
+https://accesson.kisti.re.kr/main/search/articleDetail.do?artiId=ATN0045098851
+-> 자연어처리에서 lmkor-bertdhk gpt-3가 가장 정확성이 높아 두개를 선택하게 되었다.
+
