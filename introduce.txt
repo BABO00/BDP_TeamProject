@@ -10,6 +10,8 @@ mapreduce -> mapreduce.py : mrjob을 이용하여 mapreduce실행
 new폴더 -> ottk.py : 데이터 전처리 후 hdfs에 저장
 		-> run.sh : bash run.sh로 ottk.py실행
 		-> learn.py : logistic regression 학습 및 결과확인
+		-> run1.sh : bash run1.sh로 learn.py실행
 		-> bull.txt : 불용어 모음, hdfs /user/maria_dev/new/bull.txt 옮겨서 사용
 		-> kakao.csv : csv가아닌 디렉토리 안에 10만개의 카카오톡 한글리뷰가 있음
-
+		-> result.csv : 거짓리뷰 삭제 전 삭제 후 결과
+		-> run2.sh . :bash run2.sh로 result.csv실행

@@ -11,11 +11,18 @@ df1 = pd.read_csv(data_path1, engine='python')
 data_path2 = "/home/maria_dev/BDP_TeamProject/new/kakao.csv/part-00000-0ab6da8b-c151-4159-ad13-4f3b9804cceb-c000.csv"
 df2 = pd.read_csv(data_path2, engine='python')
 
+# Adding columns for negative_word_count and positive_word_count
+df1['negative_word_count'] = 0
+df1['positive_word_count'] = 0
+
+df2['negative_word_count'] = 0
+df2['positive_word_count'] = 0
+
 df = pd.concat([df1, df2], ignore_index=True)
 
 # Feature Extraction
 vectorizer = TfidfVectorizer(max_features=10000)
-X = vectorizer.fit_transform(df["filtered_nouns_str"].values.astype('U'))
+X = vectorizer.fit_transform(df["filtered_nouns_str"].astype('str'))
 
 # Target variable
 y = df["label"]
@@ -43,15 +50,25 @@ all_positive_words = [feature_names[i] for i in coefficients.argsort() if coeffi
 all_negative_words = [feature_names[i] for i in coefficients.argsort() if coefficients[i] < 0]
 
 # 각 리뷰에 대한 긍정단어와 부정단어의 개수 파악
-df['positive_word_count'] = df['filtered_nouns_str'].apply(lambda x: sum(1 for word in x.split() if word in all_positive_words))
-df['negative_word_count'] = df['filtered_nouns_str'].apply(lambda x: sum(1 for word in x.split() if word in all_negative_words))
+def count_positive_words(x):
+	if isinstance(x, str):
+		return sum(1 for word in x.split() if word in all_positive_words)
+	else:
+		return 0
+def count_negative_words(x):
+	if isinstance(x, str):
+		return sum(1 for word in x.split() if word in all_negative_words)
+	else:
+		return 0
 
 print(f"Original Average Rating: {df['score'].mean()}")
-
+df['positive_word_count'] = df['filtered_nouns_str'].apply(count_positive_words)
+df['negative_word_count'] = df['filtered_nouns_str'].apply(count_negative_words)
 # 4,5점에 부정단어가 더 많거나 1,2,3점에 긍정단어가 더 많은 리뷰 삭제
 df = df[~(((df['score'] == 4) | (df['score'] == 5)) & (df['positive_word_count'] < df['negative_word_count']))]
 df = df[~(((df['score'] == 1) | (df['score'] == 2) | (df['score'] == 3)) & (df['positive_word_count'] > df['negative_word_count']))]
 
-# 삭제 전과 삭제 후의 평균평점 출력
-print(f"Average Rating after Removing False Reviews: {df['score'].mean()}")
+# 중복 코드를 제거하고 평균평점
+
+print(f"Average Rating after Removing False Review: {df['score'].mean()}")
 
