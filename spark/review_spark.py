@@ -10,12 +10,12 @@ import pandas as pd
 if __name__== "__main__":
 	spark = SparkSession.builder.appName("review").getOrCreate()
 	df = spark.read.load("BDP_TeamProject/review.csv",format="csv",sep=",",inferSchema="true",header="true")
-	#stopwords = spark.read.text("BDP_TeamProject/bull.txt")
+	stopwords = spark.read.text("BDP_TeamProject/bull.txt")
 	
 
 	df = df.na.drop(subset=['content'])
-	#df = df.withColumn("year", F.year("at")).withColumn("month", F.month("at"))
-	#df = df.select("year","month","score","content")
+	df = df.withColumn("year", F.year("at")).withColumn("month", F.month("at"))
+	df = df.select("year","month","score","content")
 	print(stopwords)
 	def extract_nouns(text):
 		okt = Okt()

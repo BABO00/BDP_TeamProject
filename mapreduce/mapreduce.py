@@ -18,7 +18,7 @@ class review(MRJob):
 		okt = Okt()
 		nouns = okt.nouns(content)
 		for word in nouns:
-			if word != '""' and len(word) > 1 and int(rating) <=3:
+			if word != '""' and len(word) > 1 :#and int(rating) <=3:
 				yield (word, '1')
 	
 	def reducer(self, word, counts):

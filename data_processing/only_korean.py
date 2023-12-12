@@ -7,5 +7,5 @@ file_name = sys.argv[1]
 df = pd.read_csv(file_name)
 df = pd.DataFrame(df)
 df['content'] = df['content'].fillna('')
-df['content'] = df['content'].apply(lambda x: re.sub(r'[^a-zA-Z\s]', '', x))
+df['content'] = df['content'].apply(lambda x: re.sub('[^ ㄱ-ㅣ 가-힣]', '', x))
 df.to_csv('review.csv',index=False)
