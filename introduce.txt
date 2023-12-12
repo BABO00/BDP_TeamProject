@@ -1,0 +1,15 @@
+최우성 : 데이터 전처리, 크롤링, 최종보고서
+이도희 . 모델 학습, ppt, 발표
+
+data_processing -> only_korean.py 한글만 남기고 지우는 작업
+				-> review.csv : 한글만 남긴 결과 hdfs /user/maria_dev/new/review.csv에서이용
+
+mapreduce -> mapreduce.py : mrjob을 이용하여 mapreduce실행
+		  -> res_all : 카운트결과 -> 이걸 기반으로 불용어 처리함.
+
+new폴더 -> ottk.py : 데이터 전처리 후 hdfs에 저장
+		-> run.sh : bash run.sh로 ottk.py실행
+		-> learn.py : logistic regression 학습 및 결과확인
+		-> bull.txt : 불용어 모음, hdfs /user/maria_dev/new/bull.txt 옮겨서 사용
+		-> kakao.csv : csv가아닌 디렉토리 안에 10만개의 카카오톡 한글리뷰가 있음
+
