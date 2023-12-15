@@ -14,11 +14,11 @@ class review(MRJob):
 		return [MRStep(mapper=self.mapper, reducer=self.reducer),MRStep(reducer=self.reduce_sort)]
 	
 	def mapper(self,_,line):
-		_, date, rating, thumbsUp, content = line.split(',')
+		_, date, rating, content = line.split(',')
 		okt = Okt()
 		nouns = okt.nouns(content)
 		for word in nouns:
-			if word != '""' and len(word) > 1 :#and int(rating) <=3:
+			if word != '""' and len(word) > 1 :
 				yield (word, '1')
 	
 	def reducer(self, word, counts):

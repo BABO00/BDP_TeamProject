@@ -16,7 +16,7 @@ def extract_values_from_url(url):
 def crawling(app_id, language, country):
 	result, _ = reviews(
 			app_id, lang=language, country=country,\
-			sort=Sort.MOST_RELEVANT,count=100000,filter_score_with=None
+			sort=Sort.MOST_RELEVANT,count=3000000
 					)
 	df = pd.DataFrame(result)
 	df_copy = df[['at','score','content']]
@@ -24,6 +24,6 @@ def crawling(app_id, language, country):
 	df_copy.to_csv(f'{app_id}.csv', encoding='utf-8-sig')
 
 	return df_copy
-input_url = "https://play.google.com/store/apps/details?id=com.kakao.talk&hl=kr&gl=US"
+input_url = "https://play.google.com/store/apps/details?id=com.kakao.talk&hl=ko&gl=us"
 extract_values_from_url(input_url)
 
